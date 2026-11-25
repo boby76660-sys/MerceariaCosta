@@ -1,0 +1,19 @@
+{
+  "name": "mercearia-costa-mvp",
+  "version": "1.0.0",
+  "description": "Sistema de Gerenciamento e E-Commerce para Mercearia Costa (MVP - Projeto Integrador)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:setup": "node src/db/setup.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.12.0"
+  }
+}

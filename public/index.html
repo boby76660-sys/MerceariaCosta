@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mercearia Costa — Compras Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <!-- CABECALHO PRINCIPAL (Topo do Figma) -->
+  <header class="site-header" id="site-header">
+    <div class="header-main container">
+      <a href="#home" class="logo-link" title="Ir para a página inicial">
+        <img src="/assets/logo-mercearia-costa.png" alt="Mercearia Costa" class="logo-img" />
+      </a>
+
+      <form class="search-bar" id="search-form" role="search">
+        <input
+          type="search"
+          id="search-input"
+          placeholder="Pesquise aqui algum produto!"
+          aria-label="Pesquise aqui algum produto"
+        />
+        <button type="button" id="voice-search-btn" class="icon-btn" title="Pesquisar por voz">
+          <img src="/assets/icon-microfone.png" alt="Microfone" />
+        </button>
+        <button type="submit" class="icon-btn" title="Buscar">
+          <img src="/assets/icon-busca.png" alt="Buscar" />
+        </button>
+      </form>
+
+      <div class="header-actions">
+        <button type="button" id="theme-toggle-btn" class="header-pill-btn" title="Alternar Modo Claro/Escuro">
+          <span id="theme-icon">🌙</span>
+          <span class="hide-sm">Tema</span>
+        </button>
+
+        <button type="button" id="cart-open-btn" class="header-action-btn" title="Abrir carrinho">
+          <span class="icon-wrap">
+            <img src="/assets/icon-carrinho.png" alt="Carrinho" />
+            <span class="cart-badge" id="cart-badge">0</span>
+          </span>
+          <span class="action-label">Carrinho</span>
+        </button>
+
+        <button type="button" id="user-menu-btn" class="header-action-btn" title="Conta e acesso">
+          <img src="/assets/icon-usuario.png" alt="Usuário" />
+          <span class="action-label" id="user-label">Login / Registro</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="header-strip">
+      <div class="container strip-inner">
+        <button type="button" class="delivery-pill" id="delivery-mode-btn">
+          <small id="delivery-pill-title">Entregar em</small>
+          <strong id="delivery-pill-address">R. São José, 308 - Pocrane</strong>
+        </button>
+
+        <p class="store-address-msg">
+          Nosso estabelecimento se localiza em Pocrane, Bairro Cônego Ricardo, na Rua Antônio Joaquim 28. Venha nos visitar!
+        </p>
+
+        <div class="store-phone">Contate-nos: (33) 3316-1580</div>
+      </div>
+    </div>
+
+    <!-- Barra secundaria de navegacao rapida (RF9) -->
+    <nav class="sub-nav" aria-label="Navegação principal">
+      <div class="container sub-nav-inner">
+        <a href="#home" class="sub-nav-link" data-nav="home">Início</a>
+        <a href="#ofertas" class="sub-nav-link" data-nav="ofertas">Ofertas da Semana</a>
+        <a href="#catalogo" class="sub-nav-link" data-nav="catalogo">Catálogo Completo</a>
+        <a href="#meus-pedidos" class="sub-nav-link" data-nav="meus-pedidos" id="nav-meus-pedidos" hidden>Meus Pedidos</a>
+        <a href="#configuracoes" class="sub-nav-link" data-nav="configuracoes">Configurações</a>
+        <a href="#adm" class="sub-nav-link nav-role-badge" data-nav="adm" id="nav-adm" hidden>Painel ADM</a>
+        <a href="#entregador" class="sub-nav-link nav-role-badge" data-nav="entregador" id="nav-entregador" hidden>Área do Entregador</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- POPOVER ENTREGA / RETIRADA (Figma 217:15) -->
+  <div class="modal-backdrop" id="delivery-modal" hidden>
+    <div class="modal-card modal-sm">
+      <button type="button" class="modal-close" data-close="delivery-modal" aria-label="Fechar">×</button>
+      <h3>Como quer fazer suas compras hoje?</h3>
+      <p class="modal-sub">Precisamos dessa informação para oferecermos a melhor opção para você.</p>
+
+      <div class="toggle-grid">
+        <button type="button" class="choice-btn active" id="mode-entrega-btn">
+          <span>🚚</span> Receber em casa
+        </button>
+        <button type="button" class="choice-btn" id="mode-retirada-btn">
+          <span>🏪</span> Retirar na loja
+        </button>
+      </div>
+
+      <div id="cep-box" class="cep-box">
+        <label for="cep-input">Digite seu CEP ou Endereço</label>
+        <div class="cep-row">
+          <input type="text" id="cep-input" placeholder="36960-000" maxlength="9" />
+          <button type="button" class="btn-primary" id="save-cep-btn">Salvar</button>
+        </div>
+        <input type="text" id="quick-address-input" class="input-full mt-sm" placeholder="Rua, número e bairro (ex.: R. São José, 308 - Pocrane)" />
+      </div>
+    </div>
+  </div>
+
+  <!-- DRAWER LATERAL DO CARRINHO (Figma 217:91) -->
+  <aside class="drawer-backdrop" id="cart-drawer" hidden>
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <h3>Seu carrinho</h3>
+        <button type="button" class="modal-close" data-close="cart-drawer" aria-label="Fechar">×</button>
+      </div>
+      <div class="drawer-body" id="cart-drawer-items"></div>
+      <div class="drawer-footer">
+        <div class="drawer-total">
+          <span>Total</span>
+          <strong id="cart-drawer-total">R$ 0,00</strong>
+        </div>
+        <button type="button" class="btn-primary btn-block" id="go-checkout-btn">
+          Finalizar pedido
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTEUDO PRINCIPAL DINAMICO -->
+  <main id="app-root"></main>
+
+  <!-- RODAPE OFICIAL (Figma 248:120) -->
+  <footer class="site-footer" id="site-footer">
+    <div class="container footer-inner">
+      <p>
+        <strong>Horário de atendimento:</strong><br />
+        De segunda a sábado, das 08h às 20h<br />
+        Domingo, das 08h às 12h<br />
+        <small>*Horário de Brasília</small>
+      </p>
+      <p class="mt-md">
+        <strong>Mercearia Costa</strong><br />
+        Rua Antônio Joaquim, 28, A, Pocrane - MG | CEP 36.960-000 | CNPJ: 02.387.358/0001-44
+      </p>
+      <div class="footer-links">
+        <a href="#configuracoes">Termos de Uso e LGPD</a>
+        <span>•</span>
+        <a href="#configuracoes">Contato</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST DE FEEDBACK -->
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
